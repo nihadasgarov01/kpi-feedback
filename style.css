@@ -1,14 +1,8 @@
 body {
-  margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right top, #dfe9f3, #ffffff);
-  background-attachment: fixed;
-}
-
-.background-overlay {
-  background-image: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
-  padding: 50px 20px;
-  min-height: 100vh;
+  background-color: #f1f4f8;
+  margin: 0;
+  padding: 40px 20px;
 }
 
 .container {
@@ -17,17 +11,11 @@ body {
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  background: white;
+  border-radius: 14px;
   padding: 30px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
-}
-
-h2 {
-  color: #2f3640;
-  font-size: 22px;
-  margin-bottom: 20px;
 }
 
 input[type="text"],
@@ -38,30 +26,14 @@ textarea {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 15px;
-  margin-top: 10px;
+  margin-top: 8px;
   margin-bottom: 20px;
-  transition: border-color 0.2s;
-}
-
-input[type="text"]:focus,
-select:focus,
-textarea:focus {
-  border-color: #273c75;
-  outline: none;
 }
 
 input[type="range"] {
   width: 100%;
   margin-top: 10px;
   accent-color: #273c75;
-}
-
-.scale {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-top: 4px;
-  color: #888;
 }
 
 button {
@@ -72,18 +44,21 @@ button {
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  width: 100%;
+  margin-top: 10px;
 }
 
 button:hover {
   opacity: 0.95;
 }
 
-textarea {
-  resize: vertical;
-  font-family: inherit;
-}
-
 .hidden {
   display: none;
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 15px;
+  color: #7f8c8d;
 }
