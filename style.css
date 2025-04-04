@@ -2,11 +2,60 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #e8f0f2, #f7fbe8);
+  background: linear-gradient(to right, #e0f7fa, #f1f5f9);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   color: #2d2d2d;
+  transition: background 0.5s ease;
+}
+
+header {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 16px 32px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 20px;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+header img {
+  height: 32px;
+}
+
+#themeToggle {
+  cursor: pointer;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  margin-left: 12px;
+}
+
+body.dark {
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #f1f5f9;
+}
+body.dark .card {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+body.dark header {
+  background: rgba(30, 41, 59, 0.85);
 }
 
 .container {
@@ -77,22 +126,6 @@ button.secondary:hover {
   background: #ccc;
 }
 
-button.back {
-  background: #f3f4f6;
-  color: #1e293b;
-}
-button.back:hover {
-  background: #e5e7eb;
-}
-
-button.submit {
-  background: linear-gradient(to right, #16a34a, #065f46);
-}
-button.submit:hover {
-  background: linear-gradient(to right, #15803d, #064e3b);
-}
-
-/* Step visibility */
 .step {
   display: none;
 }
@@ -100,7 +133,6 @@ button.submit:hover {
   display: block;
 }
 
-/* Progress bar */
 .progress-wrapper {
   height: 8px;
   background: #e0e0e0;
@@ -117,7 +149,6 @@ button.submit:hover {
   border-radius: 8px;
 }
 
-/* Sliders */
 input[type=range] {
   width: 100%;
   margin: 10px 0;
@@ -142,18 +173,6 @@ input[type=range]::-webkit-slider-thumb {
   transition: background 0.2s ease;
 }
 
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range]::-moz-range-thumb {
-  height: 22px;
-  width: 22px;
-  border-radius: 50%;
-  background: #1e3a8a;
-  cursor: pointer;
-}
-
 .scale {
   display: flex;
   justify-content: space-between;
@@ -176,9 +195,4 @@ input[type=range]::-moz-range-thumb {
 
 .hidden {
   display: none;
-}
-
-/* Final step mərkəzləşdirilmiş */
-#finalStep {
-  text-align: center;
 }
