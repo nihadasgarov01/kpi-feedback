@@ -49,12 +49,11 @@
     <!-- Suallar burada dinamik şəkildə yaradılacaq -->
     <div id="questionSteps"></div>
 
-    <!-- Final Step: Göndərmə hissəsi -->
+    <!-- Final Step: Təşəkkür hissəsi -->
     <section class="card step" id="finalStep" style="display:none">
       <img src="https://cdn-icons-png.flaticon.com/512/148/148767.png" alt="Təşəkkürlər" class="icon" style="width: 80px; margin-bottom: 15px;">
       <h2>Təşəkkür edirik!</h2>
-      <p>Bütün suallara cavab verdiniz.</p>
-      <button onclick="submitAnswers()">Rəyi Göndər</button>
+      <p>Rəy uğurla göndərildi.</p>
       <button onclick="location.reload()" class="secondary">Başqa əməkdaşa rəy ver</button>
     </section>
   </div>
@@ -62,26 +61,10 @@
   <script>
     let responderName = "";
     const questionList = [
-      "Emosional Zəka – Emosiyaları düzgün idarə etmək və empatiya göstərmək.",
-      "Liderlik Bacarığı – Komandanı ruhlandırmaq və qərarvermədə iştirak.",
-      "Kreativlik – Yeni ideyalar və innovativ yanaşmalar.",
-      "Danışıqlar Bacarığı – Çətin situasiyalarda razılıq əldə etmək.",
-      "Müştəri Yönümlülük – Müştəri ehtiyaclarını anlamaq və uyğun həll təklif etmək.",
-      "Şəbəkələşmə – Peşəkar əlaqələri qurmaq və inkişaf etdirmək.",
-      "Analitik Düşüncə – Məlumatları təhlil etmək və düzgün qərar vermək.",
-      "Qərarvermə Bacarığı – Sürətli və effektiv qərarlar almaq.",
-      "Etika və Dürüstlük – Ədalətli və etik davranmaq.",
-      "İT Bacarığı – Texnologiyalardan səmərəli istifadə.",
-      "Ünsiyyət Bacarığı – Aydın, düzgün və empatik ünsiyyət.",
-      "Komanda İşi – Əməkdaşlıq mühitində səmərəli işləmək.",
-      "Vaxtın İdarə Edilməsi – Tapşırıqları vaxtında yerinə yetirmək.",
-      "Problem Həll Etmə – Yaradıcılıqla yanaşmaq və praktik həll tapmaq.",
-      "Öyrənməyə Açıq Olmaq – İnkişafa və yeniliyə meyllilik.",
-      "Məsuliyyətlilik – Tapşırıqlara cavabdehlik və ciddi yanaşma.",
-      "Elastiklik – Dəyişikliklərə çevik uyğunlaşmaq.",
-      "Diqqət və Detala Yönəlik – Detalları nəzərdən qaçırmamaq.",
-      "Motivasiya – Özünü təşviq edib motivasiyalı işləmək.",
-      "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
+      "Emosional Zəka", "Liderlik Bacarığı", "Kreativlik", "Danışıqlar Bacarığı", "Müştəri Yönümlülük",
+      "Şəbəkələşmə", "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük", "İT Bacarığı",
+      "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi", "Problem Həll Etmə", "Öyrənməyə Açıq Olmaq",
+      "Məsuliyyətlilik", "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
     ];
 
     const employees = {
@@ -121,9 +104,7 @@
       const rated = document.getElementById("rated").value;
       if (!rated) return alert("Zəhmət olmasa əməkdaşı seçin");
       document.getElementById("step2").classList.remove("active");
-
       document.getElementById("progressBarWrapper").style.display = "block";
-
       const container = document.getElementById("questionSteps");
       container.innerHTML = "";
 
@@ -139,7 +120,11 @@
             <input type="range" id="q${i}" min="1" max="5" value="3" oninput="document.getElementById('val${i}').textContent = this.value">
             <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
             <textarea id="c${i}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
-            <button onclick="nextQuestion(${i})">${i + 1 === questionList.length ? 'Tamamla' : 'Növbəti'}</button>
+            <div style="display:flex; justify-content: space-between; gap: 10px;">
+              ${i > 0 ? `<button onclick="goBack(${i})">Geri</button>` : '<span></span>'}
+              <button onclick="${i + 1 === questionList.length ? 'submitAnswers()' : `nextQuestion(${i})`}"
+              >${i + 1 === questionList.length ? 'Rəyi Göndər' : 'Növbəti'}</button>
+            </div>
           </div>`;
         container.appendChild(div);
       });
@@ -150,15 +135,17 @@
       steps[index].classList.remove("active");
       const progress = ((index + 1) / questionList.length) * 100;
       document.getElementById("progressBar").style.width = progress + "%";
-
       if (index + 1 < steps.length) {
         steps[index + 1].classList.add("active");
-      } else {
-        document.getElementById("finalStep").style.display = "block";
-        document.getElementById("questionSteps").innerHTML = "";
-        document.getElementById("progressBarWrapper").style.display = "none";
-        document.getElementById("finalStep").classList.add("active");
       }
+    }
+
+    function goBack(index) {
+      const steps = document.getElementsByClassName("question-step");
+      steps[index].classList.remove("active");
+      steps[index - 1].classList.add("active");
+      const progress = (index / questionList.length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
     }
 
     function showStep(id) {
@@ -184,8 +171,9 @@
         headers: { 'Content-Type': 'application/json' }
       });
 
-      alert("Rəy göndərildi!");
-      location.reload();
+      document.getElementById("questionSteps").innerHTML = "";
+      document.getElementById("progressBarWrapper").style.display = "none";
+      showStep('finalStep');
     }
   </script>
 </body>
