@@ -63,10 +63,96 @@
   </div>
 
   <script>
-    // Dark mode toggle
+    // Theme Toggle (Light / Dark mode)
     document.getElementById('themeToggle').addEventListener('click', () => {
       document.body.classList.toggle('dark');
     });
+
+    const questionList = [
+      "Emosional Zəka", "Liderlik Bacarığı", "Kreativlik", "Danışıqlar Bacarığı", "Müştəri Yönümlülük",
+      "Şəbəkələşmə", "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük", "İT Bacarığı",
+      "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi", "Problem Həll Etmə", "Öyrənməyə Açıq Olmaq",
+      "Məsuliyyətlilik", "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
+    ];
+
+    function goToStep2() {
+      const name = document.getElementById("responder").value.trim();
+      if (!name) return alert("Adınızı daxil edin");
+      responderName = name;
+      showStep(2);
+    }
+
+    function populateEmployees() {
+      const dept = document.getElementById("department").value;
+      const container = document.getElementById("employeeContainer");
+      const select = document.getElementById("rated");
+      select.innerHTML = '<option value="">-- Əməkdaş seçin --</option>';
+
+      const employees = {
+        "Satış": ["Aysel Məmmədova", "Tural Əliyev"],
+        "Təchizat": ["Rauf Qasımov", "Fidan Həsənli"],
+        "İnsan Resursları": ["Nigar Əliyeva", "Nihat Hüseynov"],
+        "Maliyyə": ["Kamran Məmmədov"],
+        "İT": ["Elvin Orucov"]
+      };
+
+      if (dept && employees[dept]) {
+        employees[dept].forEach(name => {
+          const opt = document.createElement("option");
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        });
+        container.classList.remove("hidden");
+      } else {
+        container.classList.add("hidden");
+      }
+    }
+
+    function goToQuestions() {
+      const rated = document.getElementById("rated").value;
+      if (!rated) return alert("Zəhmət olmasa əməkdaşı seçin");
+
+      showStep(3);
+      renderQuestions();
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("questionSteps");
+      container.innerHTML = "";
+
+      questionList.forEach((q, i) => {
+        const n = i + 1;
+        container.innerHTML += `
+          <section class="card question-step">
+            <h3>${n}. ${q}</h3>
+            <div class="slider-value">Seçim: <span id="val${n}">3</span></div>
+            <input type="range" id="q${n}" min="1" max="5" value="3" oninput="document.getElementById('val${n}').textContent = this.value">
+            <div class="scale">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <textarea id="c${n}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
+            <button onclick="nextQuestion(${i})">${n === questionList.length - 1 ? 'Rəyi Göndər' : 'Növbəti'}</button>
+          </section>
+        `;
+      });
+    }
+
+    function nextQuestion(index) {
+      const steps = document.getElementsByClassName("question-step");
+      steps[index].style.display = "none";
+
+      if (index + 1 < steps.length) {
+        steps[index + 1].style.display = "block";
+      } else {
+        showStep(4);
+      }
+    }
+
+    function showStep(id) {
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+      document.getElementById(`step${id}`).classList.add("active");
+    }
   </script>
 </body>
 </html>
