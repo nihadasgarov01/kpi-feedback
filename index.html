@@ -17,6 +17,7 @@
       }
       document.getElementById("step1").style.display = "none";
       document.getElementById("step2").style.display = "block";
+      renderQuestions(); // ✅ Load questions when Step 2 is shown
     }
 
     async function submitFeedback(event) {
@@ -40,7 +41,7 @@
         data[`c${i}`] = document.getElementById(`c${i}`).value;
       }
 
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxWfsu6XCki3Ydhdr_oGPG13RKx0A2KJx-aFvqyV7vwDxiyjB2f0xBfDPxk3vML2Ku0eA/exec', {
+      const response = await fetch('YOUR_SCRIPT_URL_HERE', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
@@ -50,42 +51,7 @@
       alert(result);
       document.getElementById("feedbackForm").reset();
     }
-  </script>
-</head>
-<body>
 
-  <div class="container">
-    <div id="step1" class="card">
-      <h2>Ad və Soyad</h2>
-      <input type="text" id="responder" placeholder="Adınızı daxil edin...">
-      <button onclick="saveName()">Davam et</button>
-    </div>
-
-    <div id="step2" style="display:none">
-      <form id="feedbackForm" class="card" onsubmit="submitFeedback(event)">
-        <h2>Əməkdaş haqqında rəy</h2>
-
-        <label>Şöbə</label>
-        <select id="department" required>
-          <option value="">-- Şöbə seçin --</option>
-          <option value="Satış">Satış</option>
-          <option value="Təchizat">Təchizat</option>
-          <option value="İnsan Resursları">İnsan Resursları</option>
-          <option value="Maliyyə">Maliyyə</option>
-          <option value="İT">İT</option>
-        </select>
-
-        <label>Əməkdaşın Adı Soyadı</label>
-        <input type="text" id="rated" required>
-
-        <div id="questions"></div>
-
-        <button type="submit">Rəyi göndər</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
     const questions = [
       "Emosional Zəka – Emosiyaları düzgün idarə etmək və empatiya göstərmək.",
       "Liderlik Bacarığı – Komandanı ruhlandırmaq və qərarvermədə iştirak.",
@@ -109,9 +75,9 @@
       "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
     ];
 
-    const container = document.getElementById("questions");
-
-    window.onload = () => {
+    function renderQuestions() {
+      const container = document.getElementById("questions");
+      container.innerHTML = "";
       questions.forEach((q, i) => {
         const n = i + 1;
         container.innerHTML += `
@@ -125,8 +91,43 @@
           </div>
         `;
       });
-    };
+    }
   </script>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Step 1 -->
+    <div id="step1" class="card">
+      <h2>1. Ad və Soyad</h2>
+      <input type="text" id="responder" placeholder="Adınızı daxil edin...">
+      <button onclick="saveName()">Davam et</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" style="display:none">
+      <form id="feedbackForm" class="card" onsubmit="submitFeedback(event)">
+        <h2>2. Rəy Verdiyiniz Əməkdaş</h2>
+
+        <label>Şöbə</label>
+        <select id="department" required>
+          <option value="">-- Şöbə seçin --</option>
+          <option value="Satış">Satış</option>
+          <option value="Təchizat">Təchizat</option>
+          <option value="İnsan Resursları">İnsan Resursları</option>
+          <option value="Maliyyə">Maliyyə</option>
+          <option value="İT">İT</option>
+        </select>
+
+        <label>Əməkdaşın Adı Soyadı</label>
+        <input type="text" id="rated" required>
+
+        <div id="questions"></div>
+
+        <button type="submit">Rəyi göndər</button>
+      </form>
+    </div>
+  </div>
 
 </body>
 </html>
