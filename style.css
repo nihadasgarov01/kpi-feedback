@@ -77,6 +77,21 @@ button.secondary:hover {
   background: #ccc;
 }
 
+button.back {
+  background: #f3f4f6;
+  color: #1e293b;
+}
+button.back:hover {
+  background: #e5e7eb;
+}
+
+button.submit {
+  background: linear-gradient(to right, #16a34a, #065f46);
+}
+button.submit:hover {
+  background: linear-gradient(to right, #15803d, #064e3b);
+}
+
 /* Step visibility */
 .step {
   display: none;
@@ -99,6 +114,7 @@ button.secondary:hover {
   background: linear-gradient(to right, #48bb78, #38a169);
   width: 0%;
   transition: width 0.4s ease-in-out;
+  border-radius: 8px;
 }
 
 /* Sliders */
@@ -160,4 +176,9 @@ input[type=range]::-moz-range-thumb {
 
 .hidden {
   display: none;
+}
+
+/* Final step mərkəzləşdirilmiş */
+#finalStep {
+  text-align: center;
 }
