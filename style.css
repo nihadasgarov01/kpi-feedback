@@ -1,3 +1,4 @@
+/* Global Styles */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -10,19 +11,50 @@ body {
   overflow-x: hidden;
 }
 
+/* Full-screen background video */
+.background-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+}
+
+/* Entry Container */
 .container {
   width: 100%;
   max-width: 600px;
+  text-align: center;
   padding: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Card */
 .card {
-  background: #fff;
+  background: white;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   transform: perspective(1500px);
 }
 
@@ -31,6 +63,7 @@ body {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* Heading and Text Styling */
 h2 {
   margin-top: 0;
   color: #1d3557;
@@ -42,6 +75,7 @@ p {
   margin-bottom: 15px;
 }
 
+/* Input and Select Fields */
 input[type="text"],
 select,
 textarea {
@@ -59,6 +93,7 @@ textarea {
   resize: vertical;
 }
 
+/* Buttons */
 button {
   width: 100%;
   padding: 14px;
@@ -190,7 +225,7 @@ input[type=range]::-moz-range-thumb {
   display: none;
 }
 
-/* Final step mərkəzləşdirilmiş */
+/* Final Step */
 #finalStep {
   text-align: center;
 }
