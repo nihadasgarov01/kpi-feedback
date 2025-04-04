@@ -8,6 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <!-- Background Video Section -->
+  <div class="background-video-container">
+    <video autoplay muted loop id="background-video">
+      <source src="your-video.mp4" type="video/mp4"> <!-- Replace with your video -->
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div> <!-- Overlay to enhance text readability -->
+  </div>
+
   <div class="container">
     <!-- Proqress bar -->
     <div id="progressBarWrapper" class="progress-wrapper" style="display: none;">
@@ -124,7 +133,7 @@
               ${i > 0 ? `<button onclick="goBack(${i})">Geri</button>` : '<span></span>'}
               <button onclick="${i + 1 === questionList.length ? 'submitAnswers()' : `nextQuestion(${i})`}">${i + 1 === questionList.length ? 'Tamamla və Rəyi Göndər' : 'Növbəti'}</button>
             </div>
-          </div>`;
+          </div>`; 
         container.appendChild(div);
       });
     }
