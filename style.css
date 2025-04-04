@@ -1,30 +1,51 @@
+/* === GENERAL RESET === */
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  background: linear-gradient(to right, #e0f2f1, #f9fbe7);
   margin: 0;
   padding: 40px 20px;
+  color: #333;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 850px;
   margin: auto;
 }
 
+h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+p {
+  color: #555;
+}
+
+/* === CARD DESIGN === */
 .card {
-  background: white;
+  background: #fff;
   border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
   padding: 30px;
   margin-bottom: 30px;
   animation: fadeIn 0.5s ease;
+  transition: all 0.3s ease-in-out;
 }
 
-h2 {
-  color: #2f3640;
-  font-size: 24px;
-  margin-bottom: 15px;
+.welcome-card {
+  text-align: center;
+  background: linear-gradient(to right top, #f0faff, #fefefe);
 }
 
+.icon {
+  width: 100px;
+  margin: 0 auto 15px auto;
+  display: block;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+}
+
+/* === FORM INPUTS === */
 input[type="text"],
 select,
 textarea {
@@ -32,60 +53,28 @@ textarea {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  margin-top: 10px;
   font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 button {
-  background: linear-gradient(to right, #00a8ff, #273c75);
+  background: linear-gradient(to right, #42a5f5, #1e88e5);
   color: white;
   padding: 14px 28px;
   border: none;
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 20px;
+  transition: background 0.3s ease;
   width: 100%;
 }
 
 button:hover {
-  opacity: 0.95;
+  background: linear-gradient(to right, #1e88e5, #1565c0);
 }
 
-input[type="range"] {
-  width: 100%;
-  accent-color: #273c75;
-}
-
-.scale {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  margin-top: 6px;
-  color: #555;
-}
-
-textarea {
-  margin-top: 10px;
-  font-family: inherit;
-  resize: vertical;
-}
-
-.icon {
-  width: 80px;
-  margin: 10px auto;
-  display: block;
-}
-
-.welcome-card {
-  text-align: center;
-  background: linear-gradient(to right top, #e0ecfc, #f8f9fa);
-}
-
-.hidden {
-  display: none;
-}
-
+/* === STEPS === */
 .step {
   display: none;
 }
@@ -94,7 +83,83 @@ textarea {
   display: block;
 }
 
+.hidden {
+  display: none;
+}
+
+/* === SLIDERS === */
+input[type="range"] {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #f44336, #ffeb3b, #4caf50);
+  outline: none;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #273c75;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background 0.3s ease;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #273c75;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #777;
+  margin-top: 4px;
+}
+
+/* === TEXTAREA === */
+textarea {
+  resize: vertical;
+  font-family: inherit;
+  min-height: 80px;
+}
+
+/* === ANIMATION === */
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 15px;
+    padding: 12px 20px;
+  }
+
+  .icon {
+    width: 70px;
+  }
 }
