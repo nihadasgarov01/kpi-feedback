@@ -122,7 +122,7 @@
             <textarea id="c${i}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
             <div style="display:flex; justify-content: space-between; gap: 10px;">
               ${i > 0 ? `<button onclick="goBack(${i})">Geri</button>` : '<span></span>'}
-              <button onclick="${i + 1 === questionList.length ? 'submitAnswers()' : `nextQuestion(${i})`}">${i + 1 === questionList.length ? 'Rəyi Göndər' : 'Növbəti'}</button>
+              <button onclick="${i + 1 === questionList.length ? 'submitAnswers()' : `nextQuestion(${i})`}">${i + 1 === questionList.length ? 'Tamamla və Rəyi Göndər' : 'Növbəti'}</button>
             </div>
           </div>`;
         container.appendChild(div);
