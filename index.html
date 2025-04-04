@@ -9,6 +9,11 @@
 </head>
 <body>
   <div class="container">
+    <!-- Proqress bar -->
+    <div id="progressBarWrapper" class="progress-wrapper" style="display: none;">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
     <!-- Step 1: Ad Girişi -->
     <section class="card step active" id="step1">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
@@ -48,8 +53,9 @@
     <section class="card step" id="finalStep" style="display:none">
       <img src="https://cdn-icons-png.flaticon.com/512/148/148767.png" alt="Təşəkkürlər" class="icon" style="width: 80px; margin-bottom: 15px;">
       <h2>Təşəkkür edirik!</h2>
-      <p>Bütün suallara cavab verdiniz. Rəyinizi göndərmək üçün klikləyin.</p>
+      <p>Bütün suallara cavab verdiniz.</p>
       <button onclick="submitAnswers()">Rəyi Göndər</button>
+      <button onclick="location.reload()" class="secondary">Başqa əməkdaşa rəy ver</button>
     </section>
   </div>
 
@@ -100,6 +106,8 @@
       if (!rated) return alert("Zəhmət olmasa əməkdaşı seçin");
       document.getElementById("step2").classList.remove("active");
 
+      document.getElementById("progressBarWrapper").style.display = "block";
+
       const container = document.getElementById("questionSteps");
       container.innerHTML = "";
 
@@ -115,7 +123,7 @@
             <input type="range" id="q${i}" min="1" max="5" value="3" oninput="document.getElementById('val${i}').textContent = this.value">
             <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
             <textarea id="c${i}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
-            <button onclick="nextQuestion(${i})">Növbəti</button>
+            <button onclick="nextQuestion(${i})">${i + 1 === questionList.length ? 'Tamamla' : 'Növbəti'}</button>
           </div>`;
         container.appendChild(div);
       });
@@ -124,11 +132,15 @@
     function nextQuestion(index) {
       const steps = document.getElementsByClassName("question-step");
       steps[index].classList.remove("active");
+      const progress = ((index + 1) / questionList.length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
+
       if (index + 1 < steps.length) {
         steps[index + 1].classList.add("active");
       } else {
         document.getElementById("finalStep").style.display = "block";
         document.getElementById("questionSteps").innerHTML = "";
+        document.getElementById("progressBarWrapper").style.display = "none";
         document.getElementById("finalStep").classList.add("active");
       }
     }
