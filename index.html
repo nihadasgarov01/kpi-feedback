@@ -144,7 +144,7 @@
         data[`c${i}`] = document.getElementById(`c${i}`).value;
       }
 
-      const response = await fetch('YOUR_SCRIPT_URL_HERE', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxWfsu6XCki3Ydhdr_oGPG13RKx0A2KJx-aFvqyV7vwDxiyjB2f0xBfDPxk3vML2Ku0eA/exec', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
