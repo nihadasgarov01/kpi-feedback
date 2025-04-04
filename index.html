@@ -10,11 +10,11 @@
 <body>
   <div class="container">
 
-    <!-- Step 1: Name Only -->
+    <!-- Step 1: Name Entry -->
     <section class="step active" id="step1">
       <div class="card welcome-card">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
-        <h2>Xoş gəlmisiən 👋</h2>
+        <h2>Xoş gəlmisən 👋</h2>
         <p>Zəhmət olmasa ad və soyadınızı daxil edin</p>
         <input type="text" id="responder" placeholder="Məs: Elvin Məmmədov" required />
         <button onclick="goToStep2()">Davam et</button>
@@ -25,7 +25,6 @@
     <section class="step" id="step2">
       <div class="card">
         <h2>Əməkdaş Seçimi</h2>
-
         <label>Rəy verdiyiniz şöbə:</label>
         <select id="department" onchange="populateEmployees()">
           <option value="">-- Şöbə --</option>
@@ -74,16 +73,20 @@
       "Danışıqlar Bacarığı", "Müştəri Yönümlülük", "Şəbəkələşmə",
       "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük",
       "İT Bacarığı", "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi",
-      "Problem Həll Etmə", "Öyrənməyə Açıqlıq", "Məsuliyyətlilik",
+      "Problem Həll Etmə", "Öyrənməyə Açıq Olmaq", "Məsuliyyətlilik",
       "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
     ];
+
+    function switchStep(from, to) {
+      document.getElementById(`step${from}`).classList.remove("active");
+      document.getElementById(`step${to}`).classList.add("active");
+    }
 
     function goToStep2() {
       const name = document.getElementById("responder").value.trim();
       if (!name) return alert("Zəhmət olmasa adınızı daxil edin.");
       responderName = name;
-      document.getElementById("step1").classList.remove("active");
-      document.getElementById("step2").classList.add("active");
+      switchStep(1, 2);
     }
 
     function populateEmployees() {
@@ -109,8 +112,7 @@
     function goToStep3() {
       const rated = document.getElementById("rated").value;
       if (!rated) return alert("Zəhmət olmasa əməkdaş seçin.");
-      document.getElementById("step2").classList.remove("active");
-      document.getElementById("step3").classList.add("active");
+      switchStep(2, 3);
       renderQuestions();
     }
 
