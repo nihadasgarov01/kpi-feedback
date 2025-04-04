@@ -7,6 +7,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   color: #2d2d2d;
+  overflow-x: hidden;
 }
 
 .container {
@@ -22,6 +23,12 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
   transition: all 0.3s ease;
+  transform: perspective(1500px);
+}
+
+.card:hover {
+  transform: perspective(1500px) rotateY(10deg) rotateX(10deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
@@ -61,12 +68,14 @@ button {
   background: linear-gradient(to right, #3b82f6, #1e3a8a);
   color: white;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s ease;
   font-weight: bold;
 }
 
 button:hover {
   background: linear-gradient(to right, #2563eb, #1e40af);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
 button.secondary {
@@ -186,20 +195,37 @@ input[type=range]::-moz-range-thumb {
   text-align: center;
 }
 
-/* Card transition effects */
+/* Parallax effect for background */
+.parallax {
+  background-image: url('your-image.jpg');
+  height: 100vh;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Card hover 3D effect */
+.card {
+  transform: perspective(1500px) rotateY(0deg) rotateX(0deg);
+  transition: all 0.3s ease;
+}
+
 .card:hover {
+  transform: perspective(1500px) rotateY(10deg) rotateX(10deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+button:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-button.secondary:hover {
-  background: #f0f0f0;
-  color: #2d2d2d;
+button.secondary {
+  background: #f5f5f5;
+  color: #333;
 }
 
-button.submit {
-  background: linear-gradient(to right, #4CAF50, #3e8e41);
-}
-button.submit:hover {
-  background: linear-gradient(to right, #45a049, #3d7b35);
+button.secondary:hover {
+  background: #e5e7eb;
 }
