@@ -33,17 +33,24 @@ p {
   transition: all 0.3s ease-in-out;
 }
 
-.question {
+.question-step {
+  display: none;
+}
+
+.question-step.active {
+  display: block;
+}
+
+.question-step .question {
   background: #fefefe;
   border-radius: 14px;
   padding: 20px;
-  margin-bottom: 20px;
   border: 1px solid #e0e0e0;
   box-shadow: 0 4px 10px rgba(0,0,0,0.03);
   transition: transform 0.3s ease;
 }
 
-.question:hover {
+.question-step .question:hover {
   transform: scale(1.01);
   box-shadow: 0 6px 15px rgba(0,0,0,0.06);
 }
@@ -87,19 +94,6 @@ button {
 
 button:hover {
   background: linear-gradient(to right, #1e88e5, #1565c0);
-}
-
-/* === STEPS === */
-.step {
-  display: none;
-}
-
-.step.active {
-  display: block;
-}
-
-.hidden {
-  display: none;
 }
 
 /* === SLIDERS === */
@@ -156,7 +150,6 @@ input[type="range"]::-moz-range-thumb {
   margin-top: 4px;
 }
 
-/* === TEXTAREA === */
 textarea {
   resize: vertical;
   font-family: inherit;
@@ -170,13 +163,11 @@ textarea:focus {
   outline: none;
 }
 
-/* === ANIMATION === */
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 600px) {
   body {
     padding: 20px 10px;
