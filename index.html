@@ -3,27 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KPI Rəy Forması – Addım-addım</title>
+  <title>KPI Rəy Platforması</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <header>
+    <h1>🌟 KPI Rəy Platforması</h1>
+    <div>
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo" />
+      <button id="themeToggle">🌙</button>
+    </div>
+  </header>
+
   <div class="container">
-    <!-- Proqress bar -->
     <div id="progressBarWrapper" class="progress-wrapper" style="display: none;">
       <div id="progressBar" class="progress-bar"></div>
     </div>
 
     <!-- Step 1: Ad Girişi -->
     <section class="card step active" id="step1">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
       <h2>Xoş gəlmisiniz 👋</h2>
       <p>Zəhmət olmasa ad və soyadınızı daxil edin</p>
       <input type="text" id="responder" placeholder="Məs: Elvin Məmmədov" required />
       <button onclick="goToStep2()">Davam et</button>
     </section>
 
-    <!-- Step 2: Şöbə və əməkdaş seçimi (Eyni səhifədə) -->
+    <!-- Step 2: Şöbə və əməkdaş seçimi -->
     <section class="card step" id="step2">
       <h2>Əməkdaş Seçimi</h2>
       <label>Rəy verdiyiniz şöbə:</label>
@@ -35,22 +41,20 @@
         <option value="Maliyyə">Maliyyə</option>
         <option value="İT">İT</option>
       </select>
-
       <div id="employeeContainer" class="hidden">
         <label>Əməkdaşın adı:</label>
         <select id="rated">
           <option value="">-- Əməkdaş seçin --</option>
         </select>
       </div>
-
       <button onclick="goToQuestions()">Davam et</button>
     </section>
 
     <!-- Suallar burada dinamik şəkildə yaradılacaq -->
     <div id="questionSteps"></div>
 
-    <!-- Final Step: Təşəkkür hissəsi -->
-    <section class="card step" id="finalStep" style="display:none">
+    <!-- Final Step -->
+    <section class="card step" id="finalStep" style="display:none; text-align:center;">
       <img src="https://cdn-icons-png.flaticon.com/512/148/148767.png" alt="Təşəkkürlər" class="icon" style="width: 80px; margin-bottom: 15px;">
       <h2>Təşəkkür edirik!</h2>
       <p>Rəy uğurla göndərildi.</p>
@@ -59,122 +63,10 @@
   </div>
 
   <script>
-    let responderName = "";
-    const questionList = [
-      "Emosional Zəka", "Liderlik Bacarığı", "Kreativlik", "Danışıqlar Bacarığı", "Müştəri Yönümlülük",
-      "Şəbəkələşmə", "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük", "İT Bacarığı",
-      "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi", "Problem Həll Etmə", "Öyrənməyə Açıq Olmaq",
-      "Məsuliyyətlilik", "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
-    ];
-
-    const employees = {
-      "Satış": ["Aysel Məmmədova", "Tural Əliyev"],
-      "Təchizat": ["Rauf Qasımov", "Fidan Həsənli"],
-      "İnsan Resursları": ["Nigar Əliyeva", "Nihat Hüseynov"],
-      "Maliyyə": ["Kamran Məmmədov"],
-      "İT": ["Elvin Orucov"]
-    };
-
-    function goToStep2() {
-      const name = document.getElementById("responder").value.trim();
-      if (!name) return alert("Adınızı daxil edin");
-      responderName = name;
-      showStep(2);
-    }
-
-    function populateEmployees() {
-      const dept = document.getElementById("department").value;
-      const container = document.getElementById("employeeContainer");
-      const select = document.getElementById("rated");
-      select.innerHTML = '<option value="">-- Əməkdaş seçin --</option>';
-      if (dept && employees[dept]) {
-        employees[dept].forEach(name => {
-          const opt = document.createElement("option");
-          opt.value = name;
-          opt.textContent = name;
-          select.appendChild(opt);
-        });
-        container.classList.remove("hidden");
-      } else {
-        container.classList.add("hidden");
-      }
-    }
-
-    function goToQuestions() {
-      const rated = document.getElementById("rated").value;
-      if (!rated) return alert("Zəhmət olmasa əməkdaşı seçin");
-      document.getElementById("step2").classList.remove("active");
-      document.getElementById("progressBarWrapper").style.display = "block";
-      const container = document.getElementById("questionSteps");
-      container.innerHTML = "";
-
-      questionList.forEach((q, i) => {
-        const div = document.createElement("section");
-        div.className = "card step question-step";
-        if (i === 0) div.classList.add("active");
-
-        div.innerHTML = `
-          <div class="question">
-            <h2>${i + 1}. ${q}</h2>
-            <div class="slider-value">Seçim: <span id="val${i}">3</span></div>
-            <input type="range" id="q${i}" min="1" max="5" value="3" oninput="document.getElementById('val${i}').textContent = this.value">
-            <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
-            <textarea id="c${i}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
-            <div style="display:flex; justify-content: space-between; gap: 10px;">
-              ${i > 0 ? `<button onclick="goBack(${i})">Geri</button>` : '<span></span>'}
-              <button onclick="${i + 1 === questionList.length ? 'submitAnswers()' : `nextQuestion(${i})`}"
-              >${i + 1 === questionList.length ? 'Rəyi Göndər' : 'Növbəti'}</button>
-            </div>
-          </div>`;
-        container.appendChild(div);
-      });
-    }
-
-    function nextQuestion(index) {
-      const steps = document.getElementsByClassName("question-step");
-      steps[index].classList.remove("active");
-      const progress = ((index + 1) / questionList.length) * 100;
-      document.getElementById("progressBar").style.width = progress + "%";
-      if (index + 1 < steps.length) {
-        steps[index + 1].classList.add("active");
-      }
-    }
-
-    function goBack(index) {
-      const steps = document.getElementsByClassName("question-step");
-      steps[index].classList.remove("active");
-      steps[index - 1].classList.add("active");
-      const progress = (index / questionList.length) * 100;
-      document.getElementById("progressBar").style.width = progress + "%";
-    }
-
-    function showStep(id) {
-      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-      document.getElementById(`step${id}`)?.classList.add("active");
-    }
-
-    async function submitAnswers() {
-      const data = {
-        responder: responderName,
-        department: document.getElementById("department").value,
-        rated: document.getElementById("rated").value
-      };
-
-      for (let i = 0; i < questionList.length; i++) {
-        data[`q${i + 1}`] = document.getElementById(`q${i}`).value;
-        data[`c${i + 1}`] = document.getElementById(`c${i}`).value;
-      }
-
-      await fetch('https://script.google.com/macros/s/AKfycbxWfsu6XCki3Ydhdr_oGPG13RKx0A2KJx-aFvqyV7vwDxiyjB2f0xBfDPxk3vML2Ku0eA/exec', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      document.getElementById("questionSteps").innerHTML = "";
-      document.getElementById("progressBarWrapper").style.display = "none";
-      showStep('finalStep');
-    }
+    // Dark mode toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
   </script>
 </body>
 </html>
