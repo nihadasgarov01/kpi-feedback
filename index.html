@@ -68,4 +68,65 @@
         <label>Şöbə</label>
         <select id="department" required>
           <option value="">-- Şöbə seçin --</option>
-          <option value="Satış">Satış</
+          <option value="Satış">Satış</option>
+          <option value="Təchizat">Təchizat</option>
+          <option value="İnsan Resursları">İnsan Resursları</option>
+          <option value="Maliyyə">Maliyyə</option>
+          <option value="İT">İT</option>
+        </select>
+
+        <label>Əməkdaşın Adı Soyadı</label>
+        <input type="text" id="rated" required>
+
+        <div id="questions"></div>
+
+        <button type="submit">Rəyi göndər</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "Emosional Zəka – Emosiyaları düzgün idarə etmək və empatiya göstərmək.",
+      "Liderlik Bacarığı – Komandanı ruhlandırmaq və qərarvermədə iştirak.",
+      "Kreativlik – Yeni ideyalar və innovativ yanaşmalar.",
+      "Danışıqlar Bacarığı – Çətin situasiyalarda razılıq əldə etmək.",
+      "Müştəri Yönümlülük – Müştəri ehtiyaclarını anlamaq və uyğun həll təklif etmək.",
+      "Şəbəkələşmə – Peşəkar əlaqələri qurmaq və inkişaf etdirmək.",
+      "Analitik Düşüncə – Məlumatları təhlil etmək və düzgün qərar vermək.",
+      "Qərarvermə Bacarığı – Sürətli və effektiv qərarlar almaq.",
+      "Etika və Dürüstlük – Ədalətli və etik davranmaq.",
+      "İT Bacarığı – Texnologiyalardan səmərəli istifadə.",
+      "Ünsiyyət Bacarığı – Aydın, düzgün və empatik ünsiyyət.",
+      "Komanda İşi – Əməkdaşlıq mühitində səmərəli işləmək.",
+      "Vaxtın İdarə Edilməsi – Tapşırıqları vaxtında yerinə yetirmək.",
+      "Problem Həll Etmə – Yaradıcılıqla yanaşmaq və praktik həll tapmaq.",
+      "Öyrənməyə Açıq Olmaq – İnkişafa və yeniliyə meyllilik.",
+      "Məsuliyyətlilik – Tapşırıqlara cavabdehlik və ciddi yanaşma.",
+      "Elastiklik – Dəyişikliklərə çevik uyğunlaşmaq.",
+      "Diqqət və Detala Yönəlik – Detalları nəzərdən qaçırmamaq.",
+      "Motivasiya – Özünü təşviq edib motivasiyalı işləmək.",
+      "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
+    ];
+
+    const container = document.getElementById("questions");
+
+    window.onload = () => {
+      questions.forEach((q, i) => {
+        const n = i + 1;
+        container.innerHTML += `
+          <div class="question">
+            <label>${n}. ${q}</label>
+            <input type="range" id="q${n}" min="1" max="5" value="3">
+            <div class="scale">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+            </div>
+            <textarea id="c${n}" rows="2" placeholder="İstəyə bağlı açıqlama..."></textarea>
+          </div>
+        `;
+      });
+    };
+  </script>
+
+</body>
+</html>
