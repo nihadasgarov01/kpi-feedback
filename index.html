@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KPI Feedback Form</title>
+  <script>
+    let responderName = "";
+
+    function saveName() {
+      responderName = document.getElementById("responder").value;
+      document.getElementById("step1").style.display = "none";
+      document.getElementById("step2").style.display = "block";
+    }
+
+    async function submitFeedback(event) {
+      event.preventDefault();
+
+      const rated = document.getElementById("rated").value;
+      const q1 = document.getElementById("q1").value;
+      const q2 = document.getElementById("q2").value;
+      const q3 = document.getElementById("q3").value;
+
+      const data = {
+        responder: responderName,
+        rated: rated,
+        q1: q1,
+        q2: q2,
+        q3: q3
+      };
+
+      const response = await fetch('https://script.google.com/macros/s/AKfycbxWfsu6XCki3Ydhdr_oGPG13RKx0A2KJx-aFvqyV7vwDxiyjB2f0xBfDPxk3vML2Ku0eA/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const result = await response.text();
+      alert(result);
+
+      document.getElementById("feedbackForm").reset();
+    }
+  </script>
+</head>
+<body>
+  <div id="step1">
+    <h2>Step 1: Enter Your Name</h2>
+    <input type="text" id="responder" required>
+    <button onclick="saveName()">Continue</button>
+  </div>
+
+  <div id="step2" style="display:none">
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+      <h2>Step 2: Give Feedback</h2>
+      <label>Who are you rating?</label><br>
+      <select id="rated">
+        <option value="Aysel Məmmədova">Aysel Məmmədova</option>
+        <option value="Elçin Hüseynov">Elçin Hüseynov</option>
+        <option value="Rauf Qasımov">Rauf Qasımov</option>
+        <!-- Add more names here -->
+      </select><br><br>
+
+      <label>Teamwork (1–5):</label><input type="number" id="q1" min="1" max="5"><br>
+      <label>Communication (1–5):</label><input type="number" id="q2" min="1" max="5"><br>
+      <label>Reliability (1–5):</label><input type="number" id="q3" min="1" max="5"><br><br>
+
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+</body>
+</html>
