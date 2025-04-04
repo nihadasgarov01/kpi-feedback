@@ -50,10 +50,12 @@ body.dark {
   background: linear-gradient(to right, #0f172a, #1e293b);
   color: #f1f5f9;
 }
+
 body.dark .card {
   background: #1e293b;
   color: #f1f5f9;
 }
+
 body.dark header {
   background: rgba(30, 41, 59, 0.85);
 }
