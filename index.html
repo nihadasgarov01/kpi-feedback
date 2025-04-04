@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="container">
-
     <!-- Step 1: Ad Girişi -->
     <section class="card step active" id="step1">
       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
@@ -19,7 +18,7 @@
       <button onclick="goToStep2()">Davam et</button>
     </section>
 
-    <!-- Step 2: Şöbə və əməkdaş seçimi -->
+    <!-- Step 2: Şöbə və əməkdaş seçimi (Eyni səhifədə) -->
     <section class="card step" id="step2">
       <h2>Əməkdaş Seçimi</h2>
       <label>Rəy verdiyiniz şöbə:</label>
@@ -46,7 +45,8 @@
     <div id="questionSteps"></div>
 
     <!-- Final Step: Göndərmə hissəsi -->
-    <section class="card step" id="finalStep">
+    <section class="card step" id="finalStep" style="display:none">
+      <img src="https://cdn-icons-png.flaticon.com/512/148/148767.png" alt="Təşəkkürlər" class="icon" style="width: 80px; margin-bottom: 15px;">
       <h2>Təşəkkür edirik!</h2>
       <p>Bütün suallara cavab verdiniz. Rəyinizi göndərmək üçün klikləyin.</p>
       <button onclick="submitAnswers()">Rəyi Göndər</button>
@@ -56,26 +56,10 @@
   <script>
     let responderName = "";
     const questionList = [
-      "Emosional Zəka – Emosiyaları düzgün idarə etmək və empatiya göstərmək.",
-      "Liderlik Bacarığı – Komandanı ruhlandırmaq və qərarvermədə iştirak.",
-      "Kreativlik – Yeni ideyalar və innovativ yanaşmalar.",
-      "Danışıqlar Bacarığı – Çətin situasiyalarda razılıq əldə etmək.",
-      "Müştəri Yönümlülük – Müştəri ehtiyaclarını anlamaq və uyğun həll təklif etmək.",
-      "Şəbəkələşmə – Peşəkar əlaqələri qurmaq və inkişaf etdirmək.",
-      "Analitik Düşüncə – Məlumatları təhlil etmək və düzgün qərar vermək.",
-      "Qərarvermə Bacarığı – Sürətli və effektiv qərarlar almaq.",
-      "Etika və Dürüstlük – Ədalətli və etik davranmaq.",
-      "İT Bacarığı – Texnologiyalardan səmərəli istifadə.",
-      "Ünsiyyət Bacarığı – Aydın, düzgün və empatik ünsiyyət.",
-      "Komanda İşi – Əməkdaşlıq mühitində səmərəli işləmək.",
-      "Vaxtın İdarə Edilməsi – Tapşırıqları vaxtında yerinə yetirmək.",
-      "Problem Həll Etmə – Yaradıcılıqla yanaşmaq və praktik həll tapmaq.",
-      "Öyrənməyə Açıq Olmaq – İnkişafa və yeniliyə meyllilik.",
-      "Məsuliyyətlilik – Tapşırıqlara cavabdehlik və ciddi yanaşma.",
-      "Elastiklik – Dəyişikliklərə çevik uyğunlaşmaq.",
-      "Diqqət və Detala Yönəlik – Detalları nəzərdən qaçırmamaq.",
-      "Motivasiya – Özünü təşviq edib motivasiyalı işləmək.",
-      "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
+      "Emosional Zəka", "Liderlik Bacarığı", "Kreativlik", "Danışıqlar Bacarığı", "Müştəri Yönümlülük",
+      "Şəbəkələşmə", "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük", "İT Bacarığı",
+      "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi", "Problem Həll Etmə", "Öyrənməyə Açıq Olmaq",
+      "Məsuliyyətlilik", "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
     ];
 
     const employees = {
@@ -131,18 +115,21 @@
             <input type="range" id="q${i}" min="1" max="5" value="3" oninput="document.getElementById('val${i}').textContent = this.value">
             <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
             <textarea id="c${i}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
-            <button onclick="nextQuestion(${i})">Davam et</button>
+            <button onclick="nextQuestion(${i})">Növbəti</button>
           </div>`;
         container.appendChild(div);
       });
     }
 
     function nextQuestion(index) {
-      document.getElementsByClassName("question-step")[index].classList.remove("active");
-      if (index + 1 < questionList.length) {
-        document.getElementsByClassName("question-step")[index + 1].classList.add("active");
+      const steps = document.getElementsByClassName("question-step");
+      steps[index].classList.remove("active");
+      if (index + 1 < steps.length) {
+        steps[index + 1].classList.add("active");
       } else {
-        showStep("finalStep");
+        document.getElementById("finalStep").style.display = "block";
+        document.getElementById("questionSteps").innerHTML = "";
+        document.getElementById("finalStep").classList.add("active");
       }
     }
 
