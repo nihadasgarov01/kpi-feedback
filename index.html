@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="container">
-
     <!-- Step 1: Name Entry -->
     <section class="step active" id="step1">
       <div class="card welcome-card">
@@ -54,7 +53,6 @@
         <button type="submit">Rəyi Göndər</button>
       </form>
     </section>
-
   </div>
 
   <script>
@@ -124,8 +122,9 @@
         container.innerHTML += `
           <div class="question">
             <label>${n}. ${q}</label>
+            <div class="slider-value">Seçim: <span id="val${n}">3</span></div>
             <input type="range" id="q${n}" min="1" max="5" value="3" oninput="document.getElementById('val${n}').textContent = this.value">
-            <div class="scale"><span>1</span><span>2</span><span id="val${n}">3</span><span>4</span><span>5</span></div>
+            <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
             <textarea id="c${n}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
           </div>
         `;
@@ -145,7 +144,7 @@
         data[`c${i}`] = document.getElementById(`c${i}`).value;
       }
 
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxWfsu6XCki3Ydhdr_oGPG13RKx0A2KJx-aFvqyV7vwDxiyjB2f0xBfDPxk3vML2Ku0eA/exec', {
+      const response = await fetch('YOUR_SCRIPT_URL_HERE', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
