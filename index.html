@@ -10,11 +10,11 @@
 <body>
   <div class="container">
 
-    <!-- Step 1: Welcome / Name -->
+    <!-- Step 1: Name Only -->
     <section class="step active" id="step1">
       <div class="card welcome-card">
         <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
-        <h2>Xoş gəlmisiniz 👋</h2>
+        <h2>Xoş gəlmisiən 👋</h2>
         <p>Zəhmət olmasa ad və soyadınızı daxil edin</p>
         <input type="text" id="responder" placeholder="Məs: Elvin Məmmədov" required />
         <button onclick="goToStep2()">Davam et</button>
@@ -24,9 +24,9 @@
     <!-- Step 2: Department & Employee -->
     <section class="step" id="step2">
       <div class="card">
-        <h2>Əməkdaş Məlumatları</h2>
+        <h2>Əməkdaş Seçimi</h2>
 
-        <label>Şöbə seçin:</label>
+        <label>Rəy verdiyiniz şöbə:</label>
         <select id="department" onchange="populateEmployees()">
           <option value="">-- Şöbə --</option>
           <option value="Satış">Satış</option>
@@ -37,22 +37,22 @@
         </select>
 
         <div id="employeeContainer" class="hidden">
-          <label>Əməkdaş seçin:</label>
+          <label>Əməkdaşın adı:</label>
           <select id="rated">
             <option value="">-- Əməkdaş --</option>
           </select>
         </div>
 
-        <button onclick="goToStep3()">Növbəti</button>
+        <button onclick="goToStep3()">Davam et</button>
       </div>
     </section>
 
     <!-- Step 3: Questions -->
     <section class="step" id="step3">
       <form class="card" id="feedbackForm" onsubmit="submitFeedback(event)">
-        <h2>Peşəkar və Şəxsi Bacarıqlar</h2>
+        <h2>Rəy Sualları</h2>
         <div id="questions"></div>
-        <button type="submit">Rəyi göndər</button>
+        <button type="submit">Rəyi Göndər</button>
       </form>
     </section>
 
@@ -70,33 +70,20 @@
     };
 
     const questions = [
-      "Emosional Zəka",
-      "Liderlik Bacarığı",
-      "Kreativlik",
-      "Danışıqlar Bacarığı",
-      "Müştəri Yönümlülük",
-      "Şəbəkələşmə",
-      "Analitik Düşüncə",
-      "Qərarvermə Bacarığı",
-      "Etika və Dürüstlük",
-      "İT Bacarığı",
-      "Ünsiyyət Bacarığı",
-      "Komanda İşi",
-      "Vaxtın İdarə Edilməsi",
-      "Problem Həll Etmə",
-      "Öyrənməyə Açıq Olmaq",
-      "Məsuliyyətlilik",
-      "Elastiklik",
-      "Detala Diqqət",
-      "Motivasiya",
-      "Stres İdarəçiliyi"
+      "Emosional Zəka", "Liderlik Bacarığı", "Kreativlik",
+      "Danışıqlar Bacarığı", "Müştəri Yönümlülük", "Şəbəkələşmə",
+      "Analitik Düşüncə", "Qərarvermə Bacarığı", "Etika və Dürüstlük",
+      "İT Bacarığı", "Ünsiyyət Bacarığı", "Komanda İşi", "Vaxtın İdarə Edilməsi",
+      "Problem Həll Etmə", "Öyrənməyə Açıqlıq", "Məsuliyyətlilik",
+      "Elastiklik", "Detala Diqqət", "Motivasiya", "Stres İdarəçiliyi"
     ];
 
     function goToStep2() {
       const name = document.getElementById("responder").value.trim();
       if (!name) return alert("Zəhmət olmasa adınızı daxil edin.");
       responderName = name;
-      switchStep(1, 2);
+      document.getElementById("step1").classList.remove("active");
+      document.getElementById("step2").classList.add("active");
     }
 
     function populateEmployees() {
@@ -122,13 +109,9 @@
     function goToStep3() {
       const rated = document.getElementById("rated").value;
       if (!rated) return alert("Zəhmət olmasa əməkdaş seçin.");
-      switchStep(2, 3);
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step3").classList.add("active");
       renderQuestions();
-    }
-
-    function switchStep(from, to) {
-      document.getElementById(`step${from}`).classList.remove("active");
-      document.getElementById(`step${to}`).classList.add("active");
     }
 
     function renderQuestions() {
@@ -141,7 +124,7 @@
             <label>${n}. ${q}</label>
             <input type="range" id="q${n}" min="1" max="5" value="3" oninput="document.getElementById('val${n}').textContent = this.value">
             <div class="scale"><span>1</span><span>2</span><span id="val${n}">3</span><span>4</span><span>5</span></div>
-            <textarea id="c${n}" placeholder="Əlavə şərh (istəyə bağlı)"></textarea>
+            <textarea id="c${n}" placeholder="Açıqlama (istəyə bağlı)"></textarea>
           </div>
         `;
       });
