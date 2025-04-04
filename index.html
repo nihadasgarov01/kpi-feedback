@@ -2,14 +2,79 @@
 <html lang="az">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KPI Rəy Forması</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f6fa;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      color: #2f3640;
+    }
+
+    h2, h3 {
+      color: #192a56;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .question-block {
+      margin-bottom: 30px;
+      padding: 15px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    button {
+      background-color: #192a56;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #273c75;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-top: -10px;
+    }
+  </style>
+
   <script>
     let responderName = "";
 
     function saveName() {
       responderName = document.getElementById("responder").value.trim();
       if (!responderName) {
-        alert("Zəhmət olmasa adınızı daxil edin.");
+        alert("Zəhmət olmasa ad və soyadınızı daxil edin.");
         return;
       }
       document.getElementById("step1").style.display = "none";
@@ -22,7 +87,7 @@
       const department = document.getElementById("department").value;
       const rated = document.getElementById("rated").value.trim();
       if (!rated) {
-        alert("Zəhmət olmasa rəy verdiyiniz əməkdaşın adını daxil edin.");
+        alert("Zəhmət olmasa rəy verdiyiniz şəxsin adını daxil edin.");
         return;
       }
 
@@ -50,83 +115,85 @@
   </script>
 </head>
 <body>
-  <!-- Step 1: Responder Name -->
+
   <div id="step1">
-    <h2>1. Ad Soyadınızı daxil edin</h2>
-    <input type="text" id="responder" placeholder="Adınız və Soyadınız" required>
+    <h2>1. Özünüz haqqında məlumat</h2>
+    <label>Ad və Soyadınız:</label>
+    <input type="text" id="responder" placeholder="Məs: Elçin Hüseynov">
     <button onclick="saveName()">Davam et</button>
   </div>
 
-  <!-- Step 2: Full Feedback Form -->
   <div id="step2" style="display:none">
     <form id="feedbackForm" onsubmit="submitFeedback(event)">
-      <h2>2. Rəy Forması</h2>
+      <h2>2. Rəy Verdiyiniz Şəxslə Bağlı Məlumat</h2>
 
-      <label>Əməkdaş hansı şöbədə çalışır?</label><br>
+      <label>Əməkdaşın şöbəsi:</label>
       <select id="department" required>
         <option value="">-- Şöbə seçin --</option>
         <option value="Satış">Satış</option>
         <option value="Təchizat">Təchizat</option>
         <option value="İnsan Resursları">İnsan Resursları</option>
-        <option value="Maliyyə">Maliyyə</option>
         <option value="İT">İT</option>
-        <!-- Digər şöbələri əlavə edə bilərsiniz -->
-      </select><br><br>
+        <option value="Maliyyə">Maliyyə</option>
+      </select>
 
-      <label>Rəy bildirdiyiniz əməkdaşın adı və soyadı:</label><br>
-      <input type="text" id="rated" required><br><br>
+      <label>Əməkdaşın Adı və Soyadı:</label>
+      <input type="text" id="rated" placeholder="Məs: Aysel Məmmədova" required>
 
-      <!-- Questions 1–20 -->
-      <div>
-        <h3>3. Suallar (1–5 arasında qiymətləndirin və səbəbi qeyd edin)</h3>
+      <h3>3. Davranış və Peşəkar Bacarıqların Qiymətləndirilməsi</h3>
 
-        <!-- Template question format -->
-        <!-- Repeat block below 20 times with different texts -->
-
-        <script>
-          const questions = [
-            "Emosional Zəka (EQ)",
-            "Liderlik Bacarıqları",
-            "Kreativlik və İnnovasiya",
-            "Danışıqlar Bacarığı",
-            "Müştəri Yönümlülük",
-            "Şəbəkələşmə (Networking)",
-            "Analitik Düşüncə",
-            "Qərarvermə Bacarığı",
-            "Etika və Peşəkar Dürüstlük",
-            "İnformasiya Texnologiyalarına Yatkınlıq",
-            "Ünsiyyət Bacarıqları",
-            "Komanda İşi",
-            "Vaxtın İdarə Edilməsi",
-            "Problem Həll Etmə",
-            "Öyrənməyə Açıq Olmaq",
-            "Məsuliyyət Hissi",
-            "Elastiklik və Uyum Bacarığı",
-            "Diqqət və Detala Yönəklik",
-            "Motivasiya və Çalışqanlıq",
-            "Stres İdarəçiliyi"
-          ];
-
-          window.onload = () => {
-            const container = document.getElementById("questions");
-            questions.forEach((q, i) => {
-              const n = i + 1;
-              container.innerHTML += `
-                <label>${n}. ${q} (1-5):</label><br>
-                <input type="number" id="q${n}" min="1" max="5" required><br>
-                <label>Səbəb:</label><br>
-                <textarea id="c${n}" rows="2" cols="50" placeholder="Əgər istəyirsinizsə, səbəbi yazın..."></textarea><br><br>
-              `;
-            });
-          };
-        </script>
-
-        <div id="questions"></div>
-
-      </div>
+      <div id="questions"></div>
 
       <button type="submit">Rəyi göndər</button>
     </form>
   </div>
+
+  <script>
+    const questions = [
+      "Emosional Zəka (EQ) – Emosiyaları və qarşı tərəfin hisslərini düzgün dərk edib adekvat reaksiya verə bilmək.",
+      "Liderlik Bacarıqları – Komandanı motivasiya etmək və qərarvermə prosesini təşviq etmək.",
+      "Kreativlik və İnnovasiya – Yeni ideyalar irəli sürmək və yaradıcı həll yolları tapmaq.",
+      "Danışıqlar Bacarığı – Mübahisəli hallarda razılıq əldə etmək üçün effektiv ünsiyyət qurmaq.",
+      "Müştəri Yönümlülük – Müştəri ehtiyaclarını düzgün dəyərləndirib uyğun həllər təklif etmək.",
+      "Şəbəkələşmə (Networking) – Peşəkar əlaqələr qurmaq və inkişaf etdirmək.",
+      "Analitik Düşüncə – Məlumatları analiz etmək və məntiqli nəticə çıxarmaq.",
+      "Qərarvermə Bacarığı – Effektiv və vaxtında qərar vermək bacarığı.",
+      "Etika və Peşəkar Dürüstlük – Ədalətli və etik prinsiplərə uyğun davranmaq.",
+      "İT Bacarıqları – Müasir texnologiyalardan səmərəli istifadə etmək.",
+      "Ünsiyyət Bacarıqları – Aydın, təsirli və düzgün ünsiyyət qurmaq.",
+      "Komanda İşi – Əməkdaşlıq və komanda mühitində səmərəli işləmək.",
+      "Vaxtın İdarə Edilməsi – Tapşırıqları vaxtında və səmərəli icra etmək.",
+      "Problem Həll Etmə – Problemlərə yaradıcı və praktik həll tapmaq.",
+      "Öyrənməyə Açıq Olmaq – Yeni biliklərə və inkişaf imkanlarına açıq olmaq.",
+      "Məsuliyyətlilik – Tapşırıqları dəqiqliklə yerinə yetirmək və nəticəyə cavabdeh olmaq.",
+      "Elastiklik – Dəyişikliklərə çevik və uyğun cavab verə bilmək.",
+      "Detala Diqqət – Kiçik detalları belə nəzərə almaq və səhvləri minimuma endirmək.",
+      "Motivasiya və Çalışqanlıq – Özünü motivasiya edə bilmək və işinə fokuslanmaq.",
+      "Stres İdarəçiliyi – Təzyiq altında belə effektiv işləyə bilmək."
+    ];
+
+    const container = document.getElementById("questions");
+    window.onload = () => {
+      questions.forEach((text, i) => {
+        const n = i + 1;
+        container.innerHTML += `
+          <div class="question-block">
+            <label>${n}. ${text}</label>
+            <input type="range" id="q${n}" min="1" max="5" value="3">
+            <div class="scale-labels">
+              <span>1 - Zəif</span>
+              <span>2</span>
+              <span>3 - Orta</span>
+              <span>4</span>
+              <span>5 - Yüksək</span>
+            </div>
+            <label>Səbəb və ya izah (istəyə bağlı):</label>
+            <textarea id="c${n}" rows="2" placeholder="Əgər açıqlama vermək istəyirsinizsə, buraya yazın..."></textarea>
+          </div>
+        `;
+      });
+    };
+  </script>
+
 </body>
 </html>
