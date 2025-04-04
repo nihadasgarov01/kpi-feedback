@@ -10,43 +10,51 @@
 <body>
   <div class="container">
 
-    <!-- Step 1: Name Entry -->
-    <div class="card" id="step1">
-      <h2>1. Ad və Soyad</h2>
-      <input type="text" id="responder" placeholder="Ad və Soyadınızı daxil edin..." required />
-      <button onclick="goToStep2()">Davam et</button>
-    </div>
+    <!-- Step 1: Welcome / Name -->
+    <section class="step active" id="step1">
+      <div class="card welcome-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
+        <h2>Xoş gəlmisiniz 👋</h2>
+        <p>Zəhmət olmasa ad və soyadınızı daxil edin</p>
+        <input type="text" id="responder" placeholder="Məs: Elvin Məmmədov" required />
+        <button onclick="goToStep2()">Davam et</button>
+      </div>
+    </section>
 
     <!-- Step 2: Department & Employee -->
-    <div class="card hidden" id="step2">
-      <h2>2. Rəy Verdiyiniz Əməkdaş</h2>
+    <section class="step" id="step2">
+      <div class="card">
+        <h2>Əməkdaş Məlumatları</h2>
 
-      <label>Əməkdaşın çalışdığı şöbə:</label>
-      <select id="department" onchange="populateEmployees()">
-        <option value="">-- Şöbə seçin --</option>
-        <option value="Satış">Satış</option>
-        <option value="Təchizat">Təchizat</option>
-        <option value="İnsan Resursları">İnsan Resursları</option>
-        <option value="Maliyyə">Maliyyə</option>
-        <option value="İT">İT</option>
-      </select>
-
-      <div id="employeeContainer" class="hidden">
-        <label>Əməkdaşın Adı:</label>
-        <select id="rated">
-          <option value="">-- Əməkdaş seçin --</option>
+        <label>Şöbə seçin:</label>
+        <select id="department" onchange="populateEmployees()">
+          <option value="">-- Şöbə --</option>
+          <option value="Satış">Satış</option>
+          <option value="Təchizat">Təchizat</option>
+          <option value="İnsan Resursları">İnsan Resursları</option>
+          <option value="Maliyyə">Maliyyə</option>
+          <option value="İT">İT</option>
         </select>
-      </div>
 
-      <button onclick="goToStep3()">Davam et</button>
-    </div>
+        <div id="employeeContainer" class="hidden">
+          <label>Əməkdaş seçin:</label>
+          <select id="rated">
+            <option value="">-- Əməkdaş --</option>
+          </select>
+        </div>
+
+        <button onclick="goToStep3()">Növbəti</button>
+      </div>
+    </section>
 
     <!-- Step 3: Questions -->
-    <form class="card hidden" id="step3" onsubmit="submitFeedback(event)">
-      <h2>3. Davranış və Peşəkar Bacarıqlar</h2>
-      <div id="questions"></div>
-      <button type="submit">Rəyi göndər</button>
-    </form>
+    <section class="step" id="step3">
+      <form class="card" id="feedbackForm" onsubmit="submitFeedback(event)">
+        <h2>Peşəkar və Şəxsi Bacarıqlar</h2>
+        <div id="questions"></div>
+        <button type="submit">Rəyi göndər</button>
+      </form>
+    </section>
 
   </div>
 
@@ -81,33 +89,29 @@
       "Elastiklik – Dəyişikliklərə çevik uyğunlaşmaq.",
       "Diqqət və Detala Yönəlik – Detalları nəzərdən qaçırmamaq.",
       "Motivasiya – Özünü təşviq edib motivasiyalı işləmək.",
-      "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
+      "Stres İdarəçiliyi – Təzyiq altında səmərəli işləmək."
     ];
 
     function goToStep2() {
       const name = document.getElementById("responder").value.trim();
-      if (!name) {
-        alert("Zəhmət olmasa adınızı daxil edin.");
-        return;
-      }
+      if (!name) return alert("Zəhmət olmasa adınızı daxil edin.");
       responderName = name;
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
+      switchStep(1, 2);
     }
 
     function populateEmployees() {
       const dept = document.getElementById("department").value;
-      const employeeSelect = document.getElementById("rated");
+      const ratedSelect = document.getElementById("rated");
       const container = document.getElementById("employeeContainer");
 
-      employeeSelect.innerHTML = '<option value="">-- Əməkdaş seçin --</option>';
+      ratedSelect.innerHTML = '<option value="">-- Əməkdaş --</option>';
 
       if (dept && employeeData[dept]) {
-        employeeData[dept].forEach(emp => {
+        employeeData[dept].forEach(person => {
           const opt = document.createElement("option");
-          opt.value = emp;
-          opt.textContent = emp;
-          employeeSelect.appendChild(opt);
+          opt.value = person;
+          opt.textContent = person;
+          ratedSelect.appendChild(opt);
         });
         container.classList.remove("hidden");
       } else {
@@ -117,13 +121,14 @@
 
     function goToStep3() {
       const rated = document.getElementById("rated").value;
-      if (!rated) {
-        alert("Zəhmət olmasa əməkdaş seçin.");
-        return;
-      }
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("step3").classList.remove("hidden");
+      if (!rated) return alert("Zəhmət olmasa əməkdaş seçin.");
+      switchStep(2, 3);
       renderQuestions();
+    }
+
+    function switchStep(from, to) {
+      document.getElementById(`step${from}`).classList.remove("active");
+      document.getElementById(`step${to}`).classList.add("active");
     }
 
     function renderQuestions() {
@@ -134,9 +139,9 @@
         container.innerHTML += `
           <div class="question">
             <label>${n}. ${q}</label>
-            <input type="range" id="q${n}" min="1" max="5" value="3" />
-            <div class="scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
-            <textarea id="c${n}" placeholder="İstəyə bağlı açıqlama..."></textarea>
+            <input type="range" id="q${n}" min="1" max="5" value="3" oninput="document.getElementById('val${n}').textContent = this.value">
+            <div class="scale"><span>1</span><span>2</span><span id="val${n}">3</span><span>4</span><span>5</span></div>
+            <textarea id="c${n}" placeholder="Əlavə şərh (istəyə bağlı)"></textarea>
           </div>
         `;
       });
@@ -144,7 +149,6 @@
 
     async function submitFeedback(event) {
       event.preventDefault();
-
       const data = {
         responder: responderName,
         department: document.getElementById("department").value,
@@ -164,7 +168,7 @@
 
       const result = await response.text();
       alert(result);
-      document.getElementById("step3").reset();
+      location.reload();
     }
   </script>
 </body>
