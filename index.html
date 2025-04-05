@@ -18,16 +18,16 @@
   </div>
 
   <div class="container">
-    <!-- Proqress bar -->
-    <div id="progressBarWrapper" class="progress-wrapper" style="display: none;">
+    <!-- Progress bar -->
+    <div id="progressBarWrapper" class="progress-wrapper">
       <div id="progressBar" class="progress-bar"></div>
     </div>
 
     <!-- Step 1: Ad Girişi -->
     <section class="card step active" id="step1">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
       <h2>Xoş gəlmisiniz 👋</h2>
-      <p>Zəhmət olmasa ad və soyadınızı daxil edin</p>
+      <p>Zəhmət olmasa ad və soyadınızı daxil edin. Bu, anonim olaraq rəy verməyiniz üçün vacibdir.</p>
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="icon" />
       <input type="text" id="responder" placeholder="Məs: Elvin Məmmədov" required />
       <button onclick="goToStep2()">Davam et</button>
     </section>
@@ -35,7 +35,8 @@
     <!-- Step 2: Şöbə və əməkdaş seçimi (Eyni səhifədə) -->
     <section class="card step" id="step2">
       <h2>Əməkdaş Seçimi</h2>
-      <label>Rəy verdiyiniz şöbə:</label>
+      <p>Rəy verdiyiniz şöbəni seçin və əməkdaşı seçin.</p>
+      <label>Şöbə seçin:</label>
       <select id="department" onchange="populateEmployees()">
         <option value="">-- Şöbə seçin --</option>
         <option value="Satış">Satış</option>
