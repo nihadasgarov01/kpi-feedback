@@ -1,9 +1,9 @@
-/* General Styles */
+/* General body styling */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #e8f0f2, #f7fbe8); /* Soft pastel gradient */
+  background: linear-gradient(to right, #e8f0f2, #f7fbe8);
   display: flex;
   justify-content: center;
   min-height: 100vh;
@@ -12,20 +12,21 @@ body {
   position: relative;
 }
 
-/* Full-screen background video */
+/* Background video section */
 .background-video-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  z-index: -1;
 }
 
 #background-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.5;
 }
 
 .overlay {
@@ -34,74 +35,48 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }
 
 /* Container */
 .container {
   width: 100%;
   max-width: 600px;
-  text-align: center;
   padding: 40px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  position: relative; /* For the background overlay */
   z-index: 1;
 }
 
-/* Progress Bar */
-.progress-wrapper {
-  height: 10px;
-  background: #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 25px;
-  display: none; /* Initially hidden */
-}
-
-.progress-bar {
-  height: 10px;
-  background: linear-gradient(to right, #48bb78, #38a169);
-  width: 0%;
-  transition: width 0.4s ease-in-out;
-  border-radius: 8px;
-}
-
-/* Card Style */
+/* Card Styling */
 .card {
-  background: white;
+  background: #fff;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   transform: perspective(1500px);
 }
 
+/* 3D Hover effect on card */
 .card:hover {
   transform: perspective(1500px) rotateY(10deg) rotateX(10deg);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Heading */
+/* Heading and Text */
 h2 {
   margin-top: 0;
   color: #1d3557;
   font-size: 24px;
-  font-weight: 600;
-  animation: fadeIn 1s ease-out;
 }
 
-/* Paragraph */
 p {
   font-size: 14px;
   margin-bottom: 15px;
-  text-align: center;
-  animation: fadeIn 1.5s ease-out;
 }
 
-/* Input Fields */
+/* Input and Textarea */
 input[type="text"],
 select,
 textarea {
@@ -133,12 +108,14 @@ button {
   font-weight: bold;
 }
 
+/* Button hover effect */
 button:hover {
   background: linear-gradient(to right, #2563eb, #1e40af);
   transform: translateY(-5px);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Secondary Button (e.g., Back button) */
 button.secondary {
   background: #f5f5f5;
   color: #333;
@@ -149,6 +126,7 @@ button.secondary:hover {
   background: #ccc;
 }
 
+/* Back Button Styling */
 button.back {
   background: #f3f4f6;
   color: #1e293b;
@@ -158,24 +136,77 @@ button.back:hover {
   background: #e5e7eb;
 }
 
+/* Final Submit Button */
 button.submit {
   background: linear-gradient(to right, #16a34a, #065f46);
 }
-
 button.submit:hover {
   background: linear-gradient(to right, #15803d, #064e3b);
 }
 
-/* Step Visibility */
+/* Step visibility (Active steps only visible) */
 .step {
   display: none;
 }
-
 .step.active {
   display: block;
 }
 
-/* Scale for Slider */
+/* Progress Bar */
+.progress-wrapper {
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.progress-bar {
+  height: 10px;
+  background: linear-gradient(to right, #48bb78, #38a169);
+  width: 0%;
+  transition: width 0.4s ease-in-out;
+  border-radius: 8px;
+}
+
+/* Sliders */
+input[type=range] {
+  width: 100%;
+  margin: 10px 0;
+  appearance: none;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  height: 12px;
+  background: linear-gradient(to right, #ef4444, #facc15, #10b981);
+  border-radius: 8px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background: #1e3a8a;
+  cursor: pointer;
+  margin-top: -8px;
+  transition: background 0.2s ease;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background: #1e3a8a;
+  cursor: pointer;
+}
+
+/* Slider Scale */
 .scale {
   display: flex;
   justify-content: space-between;
@@ -183,6 +214,7 @@ button.submit:hover {
   color: #555;
 }
 
+/* Slider value display */
 .slider-value {
   font-size: 16px;
   font-weight: 600;
@@ -190,26 +222,26 @@ button.submit:hover {
   margin-bottom: 10px;
 }
 
-/* Icon */
+/* Icons */
 .icon {
   width: 90px;
   display: block;
   margin: 0 auto 20px;
 }
 
-/* Hidden elements */
+/* Hidden elements (used for conditional visibility) */
 .hidden {
   display: none;
 }
 
-/* Final Step */
+/* Final Step mərkəzləşdirilmiş */
 #finalStep {
   text-align: center;
 }
 
-/* Parallax Effect for Background */
+/* Parallax effect for background */
 .parallax {
-  background-image: url('your-image.jpg'); /* Add a background image for parallax */
+  background-image: url('your-image.jpg');
   height: 100vh;
   background-attachment: fixed;
   background-position: center;
@@ -217,13 +249,7 @@ button.submit:hover {
   background-size: cover;
 }
 
-/* Animation for fading in text */
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Card Hover 3D Effect */
+/* 3D effect for cards */
 .card {
   transform: perspective(1500px) rotateY(0deg) rotateX(0deg);
   transition: all 0.3s ease;
@@ -239,8 +265,11 @@ button:hover {
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Style for final confirmation */
-#finalStep {
-  text-align: center;
-  animation: fadeIn 2s ease-out;
+button.secondary {
+  background: #f5f5f5;
+  color: #333;
+}
+
+button.secondary:hover {
+  background: #e5e7eb;
 }
